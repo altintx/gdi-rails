@@ -3,9 +3,7 @@ This is an Intro to Rails course, intended for eventual inclusion in the Girl De
 
 The course is meant to be taught in four two-hour workshops. Each of the slides and practice files are customizable according to the needs of a given class or audience.
 
-Cheri's slides can be viewed [here](http://cherimarie.github.io/gdi-core-rails/#/).
 ## Outline
-
 This course is four 2H classes, with two consecutive classes on two consecutive Saturdays.
 
 ### Class 1: Introduction
@@ -27,22 +25,29 @@ This course is four 2H classes, with two consecutive classes on two consecutive 
 
 ### Class 2: Data modeling
 * Let's build a blog
-* How do you identify models? What's the relationship between models & screens? (Data modeling for a blog)
+* What fields do you talk about with a blog post?
+    * Title:string
+    * Body:string
+    * Posted? Rails captures created and update for us
 * Exercise: Scaffold a single model blog
 * Discuss how requirements change and migration's role in them
 * Discuss data relationships
 * Exercise: Scaffold an Author; create a migration to add Post belongsTo Author
+    * name:string
+    * email:string
+    * see http://edgeguides.rubyonrails.org/active_record_migrations.html
 * Attempting to test will fail because of pending migration
     * how to run migration
     * Now can demo feature; demonstrates hasMany and belongsTo
     * Add Author UI to post/index & post/view
-* Now discuss hasAndBelongsToMany
 * Exercise: Add comments
     * Scaffold comments
+        * post:reference
+        * comment:string
     * Add hasMany relationship to Post
     * migration is different this time. Why? 
     * Add UI to post/view
-* Stretch material: Asdd validation if time allows. 
+* Stretch material: Add validation if time allows. 
 
 ### Class 3: Routing
 * Quick review
@@ -51,6 +56,7 @@ This course is four 2H classes, with two consecutive classes on two consecutive 
 * Pretty URLs
     * Exercise: Lets make Authors be /author/name instead of /author/1
         * add a slug to author
+        * there are gems to help with this (like friendly-id or slug) but we'll do it ourselves for now. We don't want to get in to "how to use a gem" in this class.
     * Exercise: how bout posts too
         * add a slug to posts
     * Comments probably doesn't make sense. Why?
@@ -71,7 +77,6 @@ This course is four 2H classes, with two consecutive classes on two consecutive 
     * Heroku - easy but costs
     * nginx - mention web servers course
 * Stretch marterial: partials. Make an author partial that is included on blog page.
-  
 
 ## Promotional Blurb
 Ready to build on your basic Ruby knowledge to start building full web applications? It's time to learn Rails! 
