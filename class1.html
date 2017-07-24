@@ -139,6 +139,30 @@ $ rails server
         </section>
 
         <section>
+            <h3>Model View Controller Architecture</h3>
+            <ul>
+              <li>Models hold logic about objects &amp; interact with database.</li>
+              <li>Views are presentation.</li>
+              <li>Controllers coordinate the two. </li>
+            </ul>
+            <img src="images/mvc.gif" />
+          </section>
+  
+          <section>
+            <h3>MVC Goal</h3>
+            <p>By isolating logic and presentation, you remove dependencies. </p>
+  
+            <p>Views don’t need to know how their data is generated, and Models don’t need to know how their data is used. Changes to one won’t affect the other.</p>
+          </section>
+  
+          <section>
+            <h3>MVC Explanation</h3>
+            <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding Student.all. </p>
+  
+            <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
+          </section>  
+
+        <section>
           <h3>Step 1</h3>
           <h4>Add a Student Model</h4>
           <p>In the terminal, generate the model, then run database migration:</p>
@@ -215,30 +239,6 @@ $ rails generate controller Students
 def index 
   @students = Student.all 
 end           </code></pre>
-        </section>
-
-        <section>
-          <h3>Model View Controller Architecture</h3>
-          <ul>
-            <li>Models hold logic about objects &amp; interact with database.</li>
-            <li>Views are presentation.</li>
-            <li>Controllers coordinate the two. </li>
-          </ul>
-          <img src="images/mvc.gif" />
-        </section>
-
-        <section>
-          <h3>MVC Goal</h3>
-          <p>By isolating logic and presentation, you remove dependencies. </p>
-
-          <p>Views don’t need to know how their data is generated, and Models don’t need to know how their data is used. Changes to one won’t affect the other.</p>
-        </section>
-
-        <section>
-          <h3>MVC Explanation</h3>
-          <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding Student.all. </p>
-
-          <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
         </section>
 
         <section>
