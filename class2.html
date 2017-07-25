@@ -41,133 +41,113 @@
           <p>slides: http://cherimarie.github.io/gdi-rails</p>
         </section>
         
-        <!-- Welcome-->
         <section>
-          <h3>Welcome!</h3>
-          <div class = "left-align">
-          <p>Girl Develop It is here to provide affordable and accessible programs to learn software through mentorship and hands-on instruction.</p>
-          <p class ="green">Some "rules"</p>
-          <ul>
-            <li>We are here for you!</li>
-            <li>Every question is important</li>
-            <li>Help each other</li>
-            <li>Have fun</li>
-          </ul>
-          </div>
+          <h3>Let's build a blog</h3>
+          <p>Rails makes CRUD apps easy</p>
         </section>
-        
+
         <section>
-          <h3>What we will cover today</h3>
+          <h3>When you build a Rails app, start with your models</h3>
+          <p>Blogs have:</p>
           <ul>
-            <li>Homework review</li>
-            <li>Write user stories for new app</li>
-            <li>Plan app architecture</li>
-            <li>Build models</li>
-            <li>Build data associations</li>
+            <li>Posts</li>
+            <li>Comments</li>
           </ul>
         </section>
 
         <section>
-          <h3>Homework Discussion</h3>
-          <p>Questions?</p>
-        </section>
-
-        <section>
-          <h3>Best Song App</h3>
-          <h5>Description</h5>
-          <p>An application that lists artists and allows users to vote for their favorite songs by artist, and suggest new songs to vote on.</p>
-        </section>
-
-        <section>
-          <h3>User Stories</h3>
+          <h3>What makes a post a post</h3>
           <ul>
-            <li>Stories guide development- how will your product be used?</li>
-            <li>Should be for small, testable features</li>
-            <li>Written with input from the stakeholders</li>
-            <li>Formal format is: As a (role) I want (goal) so that (reason).</li>
-            <li>Give them a priority ("required", "nice to have", "v2")</li>
-            <li>Give them an estimated time/size (how hard will this be to do?)</li>
-            <li>During the project, stories may change, be broken into smaller pieces, be re-prioritized or re-estimated</li>
+            <li>Title</li>
+            <li>Body</li>
+            <li>Date</li>
           </ul>
-        </section>
-
-        <section>
-          <h3>User Story Examples</h3>
-          <ul>
-            <li>As a user, I can backup my entire hard drive.</li>
-            <li>As a user, I can indicate folders not to backup so that my backup drive isn't filled up with things I don't need saved.</li>
-            <li>Parking passes can be paid via credit cards.</li>
-            <li>Students can only enroll in seminars for which they have prerequisites.</li>
-          </ul>
-          <a href="http://www.allaboutagile.com/writing-good-user-stories/" alt="User stories reading">More info on writing good user stories...</a>
-        </section>
-
-        <section>
-          <h3>Best Song App User Stories</h3>
-          <p>????</p>
-          <!-- 10 minute discussion, list student suggestions on whiteboard if possible -->
-        </section>
-
-        <section>
-          <h3>App Architecture</h3>
-          <ul>
-            <li>Models</li>
-            <li>Data Associations</li>
-            <li>Controllers</li>
-            <li>Views</li>
-          </ul>
-          <br><br>
-          <p>What do we need?</p>
           <!-- 10 minute discussion, write out requirements on a whiteboard if possible -->
         </section>
 
         <section>
-          <h3>Let's Build an App!</h3>
-          <!-- Change these models, etc. to reflect your class' requirements-->
-          <h4>Generating Models</h4>
-          <pre><code class="command-line">
-$ rails generate model Artist full_name:string 
-$ rails generate model Song title:string artist:belongs_to
-$ rails generate model Vote song:belongs_to            
-          </code></pre>
-        </section>
-
-        <section>
-          <h3>Migrations</h3>
-          <p>Generating models also generated database migrations for us. Let's check them out and make sure they list the attributes we want.</p>
-        </section>
-
-        <section>
-          <h3>Migrations</h3>
-          <p>Let's add 'current hairstyle' attribute to Artist table!</p>
-          <p>Since the migration hasn't been run yet, we can just edit it to add the new column.</p>
-          <pre><code class="ruby">
-def change
-  create_table :artists do |t|
-    t.string :name
-    t.string :current_hairstyle
-    t.timestamps
-  end
-end
-          </code></pre>
-          <p>Ok, now that it looks good, run the migrations.</p>
-          <pre><code class="command-line">
-$ rake db:migrate
-          </code></pre>
-        </section>
-
-        <section>
-          <h3>Migrations</h3>
+          <h3>Naming Conventions</h3>
+          <p>Rails guesses you'll name things a certain ways.</p>
           <ul>
-            <li>Migrations describe changes that will be made to the database. </li>
-            <li>They use a Ruby DSL so you don't have to write SQL.</li>
-            <li>Each migration modifies the database's schema, which you can see in your db/schema.rb file.</li>
+            <li>Models are singular <code>Person</code></li>
+            <li>Controllers are pluralized models + Controller<code>PeopleController</code></li>
+            <li>Templates are same base as controller <code>People</code></li>
+            <li>Files are lowercased and underscored <code>people_controller.rb</code></li>
+            <li>Fields are lowercased and underscored <code>first_name</code></li>
           </ul>
-          <a href="http://guides.rubyonrails.org/migrations.html" alt="Rails guide to migrations">Migrations in more detail...</a>
+        </section>
+
+        <section>
+          <h3>Let's Build a blog!</h3>
+          <h4>Don't blink</h4>
+          <pre><code class="command-line">
+$ rails generate scaffold Post title:string body:string 
+          </code></pre>
+          <!-- wait what's scaffold? discuss -->
+        </section>
+
+        <section>
+          <h3>What about the date?</h3>
+        </section>  
+
+        <section>
+          <h3>Pending migration?</h3>
+          <!-- talk about what a migration is -->
+          <p><code>rails generate scaffold</code> made a migration, too.</o>
+          <pre><code class="command-line">
+$ rails db:migrate
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>And now you have a blog.</h3>
+          <p>Let's try it</p>
+          <!-- let's change the welcome page -->
+        </section>
+        
+        <section>
+          <h3>But sometimes requirements change</h3>
+          <p>You've built a thing and your boss asks "where's the author?" You say "You didn't tell me you needed an author." And then your boss say "Make an author.".</p>
+          <p>But migrations make this easy.</p>
+        </section>
+
+        <section>
+          <h3>So what does an author need?</h3>
+          <ul>
+            <li>name</li>
+            <li>email</li>
+          </ul>
+          <p>So let's scaffold it</p>
+        </section>
+
+        <section>
+          <h3>But we already scaffolded Post</h3>
+          <p>So we need to make a migration for it. Migrations let us change existing structures.</p>
+          <pre><code class="command-line">
+            $ rails generate migration AddAuthorToPosts author:references
+            $ rails db:migrate
+          </code></pre>
+          <!-- rails likes when you add blah to blah -->
+        </section>
+        
+        <section>
+          <h3>Now we modify the existing screens</h3>
+          <ul>
+            <li>app/models/post.rb<pre><code class="ruby">belongs_to :author</code></pre></li>
+            <li>app/controllers/posts_controller.rb
+              <ul>
+                <li><pre><code class="ruby">params.require(:post).permit(:id, :title, :body, :author_id)</code></pre></li>
+                <li><pre><code class="ruby">before only: ['create', 'edit'] do 
+  @authors = Author.All
+end</code></pre></li>
+            <li>app/views/posts/_form.html.erb</li>
+            <li>app/views/posts/show.html.erb</li>
+          </ul>
         </section>
 
         <section>
           <h3>Migrations</h3>
+          <a href="http://guides.rubyonrails.org/migrations.html" alt="Rails guide to migrations">Migrations in more detail...</a>
           <p>It would be pretty cool if songs has an attribute called 'optimal volume'. Let's create a migration to add that to the table. Run this in the terminal:</p>
           <pre><code class="command-line">
 $ rails generate migration AddOptimalVolumetoSongs
