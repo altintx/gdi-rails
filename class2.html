@@ -81,6 +81,8 @@
           <h3>Let's Build a blog!</h3>
           <h4>Don't blink</h4>
           <pre><code class="command-line">
+$ rails new blog
+$ cd blog
 $ rails generate scaffold Post title:string body:string 
           </code></pre>
           <!-- wait what's scaffold? discuss -->
@@ -118,6 +120,7 @@ $ rails db:migrate
             <li>email</li>
           </ul>
           <p>So let's scaffold it</p>
+          <pre><code class="command-line">$ rails g scaffold Author name:string email:string</code></pre>
         </section>
 
         <section>
@@ -137,11 +140,16 @@ $ rails db:migrate
             <li>app/controllers/posts_controller.rb
               <ul>
                 <li><pre><code class="ruby">params.require(:post).permit(:id, :title, :body, :author_id)</code></pre></li>
-                <li><pre><code class="ruby">before only: ['create', 'edit'] do 
+                <li><pre><code class="ruby">before_action only: ['create', 'edit'] do 
   @authors = Author.All
 end</code></pre></li>
-            <li>app/views/posts/_form.html.erb</li>
-            <li>app/views/posts/show.html.erb</li>
+            <li>app/views/posts/_form.html.erb
+              <pre><code class="ruby">&lt;%=f.collection_select :author_id, @authors,:id,:name%&gt;</code></pre>
+            </li>
+            </li>
+            <li>app/views/posts/show.html.erb
+              <pre><code class="ruby">&lt;%= @post.author.name%&gt;</code></pre>
+            </li>
           </ul>
         </section>
 
