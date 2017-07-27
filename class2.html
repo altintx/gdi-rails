@@ -154,127 +154,31 @@ end</code></pre></li>
         </section>
 
         <section>
-          <h3>Migrations</h3>
-          <a href="http://guides.rubyonrails.org/migrations.html" alt="Rails guide to migrations">Migrations in more detail...</a>
-          <p>It would be pretty cool if songs has an attribute called 'optimal volume'. Let's create a migration to add that to the table. Run this in the terminal:</p>
-          <pre><code class="command-line">
-$ rails generate migration AddOptimalVolumetoSongs
-          </code></pre>
-          <p>And this will be the migration file it generates, with your additions:</p>
-          <pre><code class="ruby">
-class AddOptimalVolumetoSongs &lt; ActiveRecord::Migration
-  def change
-    add_column :songs, :optimal_volume, :string
-  end
-end
-          </code></pre>
-          <p>Sweet. Now run the migration ('rake db:migrate') so the schema is up to date.</p>
+          <h3>See? Changing requirements weren't the end of the world</h3>
         </section>
 
         <section>
-          <h3>Let's Develop It!</h3>
-          <p>Generate a migration to add a column called 'hometown' with a type of 'string' to the Artists table.</p>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <p>The second part of building data associations is in the models.</p>
-          <pre><code class="ruby">
-class Artist &lt; ActiveRecord::Base
-  has_many :songs 
-end
-
-class Song &lt; ActiveRecord::Base
-  belongs_to :artist
-  has_many :votes 
-end
-
-class Vote &lt; ActiveRecord::Base
-  belongs_to :song
-end            
-          </code></pre>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <p>Rails supports six types of associations: </p>
+          <h3>Let's tackle Comments</h3>
+          <p>How do we start?</p>
           <ul>
-            <li>belongs_to</li>
-            <li>has_one</li>
-            <li>has_many</li>
-            <li>has_many :through</li>
-            <li>has_one :through</li>
-            <li>has_and_belongs_to_many</li>
-          </ul>
-          <p>Note: the last two are not used very often.</p>
-          <a href="http://guides.rubyonrails.org/association_basics.html" alt="rails guides association basics">Associations in more detail...</a>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <h4>belongs_to</h4>
-          <p>This sets up either a one-to-one or one-to-many model with another mdoel.</p>
-          <li>If order <strong>belongs to</strong> customer, each order can be assigned to exactly <strong>one</strong> customer.</li>
-          <li>In the order table, there will be an entry for 'customer_id: integer'.</li>
-          <li>The order model will say 'belongs_to :customer'. Note that 'customer' is singular!</li>
-          <li>The customer model will need to either 'have one' or 'have many' orders.</li>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <h4>has_one</h4>
-          <p>This sets up a one-to-one connection with a another model.</p>
-          <li>If supplier <strong>has one</strong> account, each supplier can have exactly <strong>one</strong> associated account.</li>
-          <li>In the supplier table, there will not be a reference to accounts.</li>
-          <li>The supplier model will say 'has_one :account'. Note that 'account' is singular!</li>
-          <li>The account model will need to 'belong to' supplier.</li>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <h4>has_many</h4>
-          <p>This sets up a one-to-many connection with another model.</p>
-          <li>If customer <strong>has many</strong> orders, each customer may be associated with zero or more orders.</li>
-          <li>In the customer table, there will not be a reference to orders.</li>
-          <li>The customer model will say 'has_many :orders'. Note that 'orders' is plural!</li>
-          <li>Orders will need to 'belong to' customer.</li>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <h4>has_many :through</h4>
-          <p>This sets up a many-to-many connection to another model, through a third model.</p>
-          <li>A patient can have many physicians <strong>through</strong> an appointment and a physician can have many patients <strong>through</strong> an appointment.</li>
-          <li>In the appointments table, there will be an entry for both physician_id and patient_id.</li>
-          <li>The appointment model will say 'belongs_to :physician, belongs_to :patient', and the patient model will say 'has_many :appointments, has_many :physicians, through: :appointments'.</li>
-        </section>
-
-        <section>
-          <h3>Data Associations</h3>
-          <h4>Index?</h4>
-          <p>A database index is a data structure that improves the speed of data retrieval at the cost of more storage space. An index is a copy of the selected columns, which can be searched very efficiently.</p>
-        </section>
-
-        <section>
-          <h3>Summary</h3>
-          <p>Today, we planned out our application by writing user stories and discussing the architecture. Then, we generated the models that we'll be using, and hooked up the associations properly.</p>
-        </section>
-
-        <section>
-          <h3>Questions?</h3>
-        </section>
-
-        <section>
-          <h3>Homework</h3>
-          <ul>
-          <li>Do the first three levels of <a href="http://railsforzombies.org/levels/1" alt="rails for zombies tutorial">Rails for Zombies</a></li>
-          <li>Spend some time in the Rails Console with your Best Song App, creating, destroying, and updating database records.</li>
+            <li>Scaffold</li>
+            <li>Migrate</li>
+            <li>Add code to Post model</li>
+            <li>Display comments on posts/show.html.erb</li>
           </ul>
         </section>
 
-
-
-       
+        <section>
+          <h3>Review</h3>
+          <p>We covered a lot of ground today:</p>
+          <ul>
+            <li>Making Rails app</li>
+            <li>Data modeling</li>
+            <li>Scaffolding</li>
+            <li>belongsTo and hasMany relationships</li>
+            <li>And you see how little code you must write to actually build a thing?</li>
+          </ul>
+        </section>
       </div>
       <footer>
         <div class="copyright">
