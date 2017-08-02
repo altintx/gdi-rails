@@ -62,166 +62,100 @@
         <section>
           <h3>What we will cover today</h3>
           <ul>
-            <li>Homework Review</li>
-            <li>Controllers</li>
-            <li>Routes</li>
-            <li>Views</li>
+            <li>Routing</li>
+            <li>Email</li>
+            <li>Deployment</li>
           </ul>
         </section>
 
         <section>
-          <h3>Homework Review</h3>
-          <h5>Rails Console</h5>
-          <p>Questions?</p>
+          <h3>What is routing</h3>
+          <p>Routing turns a URL into a controller and action.</p>
+          <!-- right now our URLs look like /posts/1 or /authors/15 -->
+          <!-- we want them to look like /posts/hello-world or /authors/alice -->
         </section>
 
         <section>
-          <h3>Controllers & Views</h3>
-          <p>Action View and Action Controller are the two major components of Action Pack. In Rails, web requests are handled by Action Pack, which splits the work into a controller part (performing the logic) and a view part (rendering a template). Typically, Action Controller will be concerned with communicating with the database and performing CRUD actions where necessary. Action View is then responsible for compiling the response.</p>
-        </section>
-
-  <!-- Controllers -->
-        <section>
-          <h3>What is a controller?</h3>
-          <p>After routing has determined which controller to use for a request, your controller is responsible for making sense of the request and producing the appropriate output (action and view).</p>
-          <p><a href="http://guides.rubyonrails.org/action_controller_overview.html" alt="rails guides controllers">More info...</a></p>
-        </section>
-
-        <section>
-          <h3>BestSong Controllers</h3>
-          <br>
-          <table>
-            <tr>
-                <th style="border-bottom: 2px solid skyblue;">Controller</th>
-                <th colspan="3" style="border-bottom: 2px solid skyblue;">Actions</th>
-            </tr>
-            <tr>
-                <td>Artists</td>
-                <td>Index</td>
-                <td>Show</td>
-            </tr>
-            <tr>
-                <td>Songs</td>               
-                <td>New</td>
-                <td>Create</td>
-                <td>Show</td>
-            </tr>
-            <tr>
-                <td>Ratings</td>
-                <td>New</td>
-                <td>Create</td>
-            </tr>
-          </table>
-        </section>
-
-        <section>
-          <h3>Building Controllers</h3>
-          <p>Let's work together to build the Artists, Songs, and Ratings controllers. Start with running the generate commands in the terminal: </p>
-          <pre><code>
-$ rails generate controller Artists 
-$ rails generate controller Songs
-$ rails generate controller Ratings            
-          </code></pre>
-        </section>
-<!-- Instructor leads class in building Artists, Songs, & Ratings controllers, with the actions listed in the previous section. Leave Ratings#new for the section below. -->
-
-        <section>
-          <h3>Let's Develop It!</h3>
-          <p>Build your own Rating#new controller method. It will need to create a new Rating and assign it to an instance variable, then find the song and artist by params, and assign them to instance variables. </p>
-        </section>
-
-        <section>
-          <h3>Let's Develop It!</h3>
-          <pre><code class="ruby">
-# in app/controllers/ratings_controller.rb
-
-def new
-  @rating = Rating.new
-  @song = Song.find(params[:song_id])
-  @artist = Artist.find(params[:artist_id])
-end 
-          </code></pre>
-        </section>
-
-  <!-- Routing -->
-        <section>
-          <h3>Routing</h3>
-          <p>The Rails router recognizes URLs and dispatches them to a controller's action. It can also generate paths and URLs, avoiding the need to hardcode strings in your views.</p>
-          <p>Since ratings belong to songs, and songs belong to artists, we need nested routes.</p>
-          <p><a href="http://guides.rubyonrails.org/routing.html" alt="rails guides routing">More info...</a></p>
-        </section>
-
-<!-- Views -->
-        <section>
-          <h3>What is a View</h3>
-          <p>Action View templates are written using embedded Ruby in tags mingled with HTML. To avoid cluttering the templates with boilerplate code, a number of helper classes provide common behavior for forms, dates, and strings. It's also easy to add new helpers to your application as it evolves.</p>
+          <h3>Why do we route?</h3>
           <ul>
-            <li>Layouts</li>
-            <li>Templates</li>
-            <li>Partials</li>
+            <li>We have to run code somehow</li>
+            <li>Search Engine Optimization</li>
+            <li>Can express data relationships with routes</li>
           </ul>
-          <p><a href="http://guides.rubyonrails.org/layouts_and_rendering.html" alt="rails guides views">More info...</a></p>
         </section>
 
         <section>
-          <h3>BestSong Views</h3>
+          <h3>How do we approach?</h3>
           <ul>
-            <li style="border-bottom: 2px solid skyblue;">Model/View</li>
-            <li>Layouts/Application</li>
-            <li>Artist/Index (root)</li>
-            <li>Artist/Show</li>
-            <li>Song/Show</li>
-            <li>Song/New</li>
-            <li>Song/_form</li>
-            <li>Rating/New</li>
-            <li>Rating/_form</li>
+            <li>There's a concept called slugging</li>
+            <li>There are gems to do it for us</li>
+            <li>But we'll do it ourselves</li>
           </ul>
         </section>
 
         <section>
-          <h3>Building Views</h3>
-          <p>Let's work together to build the Artists, Songs, and Ratings views.</p>
-        </section>
-
-<!-- Instructor leads class in building the views listed in the section above. Time may not permit you to get through all of them. -->
-        <section>
-          <h3>Let's Develop It!</h3>
-          <p>Build your own Song/Show view</p>
+          <h3>Let's start with Posts</h3>
+          <ul>
+            <li>Let's make an AddSlugToPosts migration</li>
+          </ul>
         </section>
 
         <section>
-          <h3>Let's Develop It!</h3>
-          <pre><code class="html">
-&lt;h1><%= @song.title %>&lt;/h1>
-
-<p>Best played at <%= @song.optimal_volume %>. Rated as <%= @song.average_rating %> by people who would know.</p> 
-          </code></pre>
+          <h3>But a slug is more like an ID than other fields</h3>
+          <p>So we won't make a form field for it</p>
         </section>
 
         <section>
-          <h3>Where Does CSS Go?</h3>
-          <p>app/assets/stylesheets</p>
-<!-- brief discussion of assets directory if time permits and class is interested-->
-        </section>
+          <h3>Instead we'll use after_create</h3>
+          <pre><code class="ruby">after_create do<br>
+   self.slug = self.id + '-' + self.title.parameterize<br>
+   self.save<br>
+end</code></pre>
+          </section>
 
-        <section>
-          <h3>Summary</h3>
-          <p>Today, we built the controllers and views for our application, including forms to create new songs and ratings, as well as all the necessary routing.</p>
+          <section>
+            <h3>These are called callbacks</h3>
+            <p>And there are a lot of them</p>
+          </section>
+          
+          <section>
+            <h3>How do we use slugs?</h3>
+            <ul>
+                <li>config/router.rb: <code class="ruby">, param: :slug</code></li>
+                <li>app/controllers/posts_controller.rb</li>
+            </ul>
+          </section>
 
-          <p>App code available <a href="https://github.com/cherimarie/bestsong" alt="github repo">on Github</a>.</p>
-        </section>
+          <section>
+            <h3>Authors have slugs, too</h3>
+          </section>
 
-        <section>
-          <h3>Questions</h3>
-          <p>?</p>
-        </section>
-        
-        <section>
-          <h3>Homework</h3>
-          <p>Ensure that you have an account set up on Heroku.com.</p>
-          <p>Read the documentation for the <a href="https://github.com/plataformatec/devise" alt="Devise gem">Devise gem</a>. We'll be using it next week.</p>
-        </section>
+          <section>
+            <h3>But we wouldn't do it to Comments</h3>
+            <!-- trusting user input -->
+          </section>
 
+          <section>
+            <h3>Filtering</h3>
+            <p>Blogs have posts by multiple authors. Let's build a way to see the posts by a certain author.</p>
+          </section>
+
+          <section>
+            <h3>PostsController</h3>
+            <pre><code language="ruby">
+def index
+    if params[:author]
+       @author = Author.find_by(slug: params[:author])
+       @posts = @author.posts
+    else
+       @posts = Post.all
+    end
+end</code></pre>
+          </section>
+
+          <section>
+            <h3>Do I really want to talk about nested resources here? Unsure.</h3>
+          </section>
 
        
       </div>
