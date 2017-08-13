@@ -157,7 +157,7 @@ $ rails server
   
           <section>
             <h3>MVC Explanation</h3>
-            <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding Student.all. </p>
+            <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding <code class="ruby">Student.all</code> </p>
   
             <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
           </section>  
@@ -168,7 +168,7 @@ $ rails server
           <p>In the terminal, generate the model, then run database migration:</p>
           <pre><code class="command-line">
 $ rails generate model student bio:string full_name:string
-$ rake db:migrate 
+$ rails db:migrate 
           </code></pre>
         </section>
 
@@ -180,9 +180,8 @@ $ rake db:migrate
 
           <p class="smalltext">Find them in db/migrate/</p>
 
-          <p class="smalltext">Your app will not work as expected if you have pending migrations. They must be ‘run’ to ensure that your database is properly setup. Run them each as they’re created; run them all when resetting your database or installing the app on a new computer. 
-          rake db:migrate
-          </p>
+          <p class="smalltext">Your app will not work as expected if you have pending migrations. They must be ‘run’ to ensure that your database is properly setup. Run them each as they’re created; run them all when resetting your database or installing the app on a new computer. </p>
+          <pre><code class="command-line">$ rails db:migrate</code></pre>
         </section>
 
         <section>
@@ -203,7 +202,7 @@ $ rails console
         <section>
         <h3>Rails Console</h3>
         <div class="smalltext">
-        <p>The Rails console is like IRB with your Rails app loaded in. Rad!<p>
+        <p>The Rails console is an easy way to test your models. You can do lots of stuff with it but models is where we'll start.</p>
         <p>CRUD Operations:</p></div>
         <pre><code class="command-line">
 #Create
@@ -314,14 +313,6 @@ root 'students#index'
           <h3>Wow.</h3>
           <img src="images/railsshibe.jpg" />
         </section>
-
-        <section>
-          <h3>Homework</h3>
-          <p>Practice:</p> 
-          <p><a href="http://tutorials.jumpstartlab.com/projects/blogger.html" alt="Jumpstart Labs Blogger Tutorial">Blogger tutorial from Jumpstart Labs</a>, Section I0 only!</p>
-        </section>
-
-       
       </div>
       <footer>
         <div class="copyright">
