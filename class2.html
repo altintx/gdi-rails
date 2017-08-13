@@ -71,7 +71,7 @@
           <ul>
             <li>Models are singular <code>Person</code></li>
             <li>Controllers are pluralized models + Controller<code>PeopleController</code></li>
-            <li>Templates are same base as controller <code>People</code></li>
+            <li>Templates are same base as controller but lowercase and underscored <code>people</code></li>
             <li>Files are lowercased and underscored <code>people_controller.rb</code></li>
             <li>Fields are lowercased and underscored <code>first_name</code></li>
           </ul>
@@ -104,8 +104,15 @@ $ rails db:migrate
         <section>
           <h3>And now you have a blog.</h3>
           <p>Let's try it</p>
+          <pre><code class="command-line">$ rails s</code></pre>
+          <p>If you're still running the Students example, you'll want to shut it down before running this.</p>
           <!-- let's change the welcome page -->
         </section>
+
+        <section>
+          <h3>Lets change the welcome page</h3>
+          <p>We did this in the prior example, in config/routes.rb</p>
+        </section>  
         
         <section>
           <h3>But sometimes requirements change</h3>
@@ -126,10 +133,8 @@ $ rails db:migrate
         <section>
           <h3>But we already scaffolded Post</h3>
           <p>So we need to make a migration for it. Migrations let us change existing structures.</p>
-          <pre><code class="command-line">
-            $ rails generate migration AddAuthorToPosts author:references
-            $ rails db:migrate
-          </code></pre>
+          <pre><code class="command-line">$ rails generate migration AddAuthorToPosts author:references<br/>
+$ rails db:migraterails generate migration AddAuthorToPosts author:references</code></pre>
           <!-- rails likes when you add blah to blah -->
         </section>
         
@@ -139,8 +144,8 @@ $ rails db:migrate
             <li>app/models/post.rb<pre><code class="ruby">belongs_to :author</code></pre></li>
             <li>app/controllers/posts_controller.rb
               <ul>
-                <li><pre><code class="ruby">params.require(:post).permit(:id, :title, :body, :author_id)</code></pre></li>
-                <li><pre><code class="ruby">before_action only: ['create', 'edit'] do 
+                <li><pre><code class="ruby">params.require(:post).permit(:title, :body, :author_id)</code></pre></li>
+                <li><pre><code class="ruby">before_action only: [:create, :new, :update, :edit] do 
   @authors = Author.All
 end</code></pre></li>
             <li>app/views/posts/_form.html.erb
@@ -159,12 +164,13 @@ end</code></pre></li>
 
         <section>
           <h3>Let's tackle Comments</h3>
-          <p>How do we start?</p>
+          <p>This is a big to do. Let's go 1 step at a time. Refer back to what we did with Authors.</p>
           <ul>
-            <li>Scaffold</li>
+            <li>Scaffold - remember post:references</li>
             <li>Migrate</li>
-            <li>Add code to Post model</li>
-            <li>Display comments on posts/show.html.erb</li>
+            <li>Add <code class="ruby">has_many</code> to Post model</li>
+            <li>Display comments &amp; link to new comment on posts/show.html.erb</li>
+            <li>Add before_action for posts and Posts collection to CommentsController and comments/form</li>
           </ul>
         </section>
 
