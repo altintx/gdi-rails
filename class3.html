@@ -128,6 +128,21 @@ end</code></pre>
           </section>
 
           <section>
+            <h3>Give a Model a way to declare its Param</h3>
+            <p>Rails will call .to_param on your model to come up with its identifier for Links</p>
+            <pre><code class="ruby">def to_param<br />
+    slug
+end</code></pre>
+          </section>
+
+          <section>
+            <h3>And your controller needs to switch to slug</h3>
+            <pre><code>def set_post<br/>
+    @post = Post.find(params[:slug])
+end</code></pre>
+          </section>
+
+          <section>
             <h3>Authors have slugs, too</h3>
           </section>
 
