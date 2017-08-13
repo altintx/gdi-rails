@@ -34,7 +34,6 @@
   <body>
 
     <div class="reveal">
-      <!-- All of this class' project activity can be seen in the commits from June 24, 2014 here: https://github.com/cherimarie/worstsong/commits/master -->
       <div class="slides">
         <!-- Opening slide -->
         <section>
@@ -55,11 +54,11 @@
 
         <section>
           <h3>Let's make a mailer</h3>
-          <pre><code class="command-line">$ rails g mailer Posts</code></pr>
+          <pre><code class="command-line">$ rails g mailer Posts</code></pre>
           <pre><code class="ruby">def emailAuthor(params)<br/>
    @comment = params.comment<br/>
    mail(to: @comment.post.author.email, from: 'youremail@gmail.com', subject: 'New Comment from #{@comment.email}')<br/>
-end
+end</code></pre>
         </section>
 
         <section>
