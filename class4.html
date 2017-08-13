@@ -73,9 +73,9 @@ end</code></pre>
         <section>
           <h3>Testing email is hard</h3>
           <p>But there's a gem called Letter Opener, that makes email easy</p>
-          <pre><code class="ruby">#Gemfile<br/>gem 'letter_opener'</code></pre>
+          <pre><code class="ruby">#Gemfile<br/>gem 'letter_opener_web'</code></pre>
           <pre><code class="command-line">$ bundle install</code></pre>
-          <pre><code class="ruby">#config/environments.development.rb<br>config.action_mailer.delivery_method = :letter_opener</pre></code>
+          <pre><code class="ruby">#config/environments/development.rb<br>config.action_mailer.delivery_method = :letter_opener</pre></code>
           <!-- talk about gems here -->
         </section>
         <section>
