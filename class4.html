@@ -55,9 +55,9 @@
         <section>
           <h3>Let's make a mailer</h3>
           <pre><code class="command-line">$ rails g mailer Posts</code></pre>
-          <pre><code class="ruby">def emailAuthor(params)<br/>
-   @comment = params.comment<br/>
-   mail(to: @comment.post.author.email, from: 'youremail@gmail.com', subject: 'New Comment from #{@comment.email}')<br/>
+          <pre><code class="ruby">def email_author(params)<br/>
+   @comment = comment<br/>
+   mail(to: @comment.post.author.email, from: 'youremail@gmail.com', subject: "New Comment from #{@comment.email}")<br/>
 end</code></pre>
         </section>
 
@@ -66,7 +66,7 @@ end</code></pre>
           <pre><code class="ruby"># CommentsController<br/>
 def create
    @comment.save
-   PostMailer.emailAuthor(@comment).deliver_now
+   PostsMailer.email_author(@comment).deliver_now
 end</code></pre>
             <!-- talk about what this is doing? -->
         </section>
@@ -76,6 +76,7 @@ end</code></pre>
           <pre><code class="ruby">#Gemfile<br/>gem 'letter_opener_web'</code></pre>
           <pre><code class="command-line">$ bundle install</code></pre>
           <pre><code class="ruby">#config/environments/development.rb<br>config.action_mailer.delivery_method = :letter_opener</pre></code>
+          <p>Be sure to restart <code>rails s</code> when you change your Gemfile</p>
           <!-- talk about gems here -->
         </section>
         <section>
