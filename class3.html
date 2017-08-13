@@ -160,7 +160,7 @@ end</code></pre>
             <pre><code language="ruby">
 def index
     if params[:author]
-       @author = Author.find_by(slug: params[:author])
+       @author = Author.find(params[:author])
        @posts = @author.posts
     else
        @posts = Post.all
@@ -169,8 +169,32 @@ end</code></pre>
           </section>
 
           <section>
+              <h3>Authors show.html.erb</h3>
+              <pre><code language="ruby">
+&lt;h3&gt;Posts&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;%= link_to 'All Posts', posts_by_author_path(@author) %&gt;&lt;/li&gt;
+  &lt;% @author.posts.each do |post| %&gt;
+    &lt;li&gt;&lt;%= link_to post.title, post_path(post) %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;
+</code></pre>
+            </section>
+
+            <section>
+                <h3>Router</h3>
+                <pre><code language="ruby">
+get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
+              </section>
+              <section>
+                  <h3>Author Model</h3>
+                  <pre><code language="ruby">
+  has_many :posts</code></pre>
+                </section>
+  
+          <section>
             <h3>And let's see it work</h3>
-            <p><a href="./class4.html">Class 3</a></p>
+            <p><a href="./class4.html">Class 4</a></p>
           </section>
 
       </div>
