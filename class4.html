@@ -55,96 +55,60 @@
         <section>
           <h3>Let's make a mailer</h3>
           <pre><code class="command-line">$ rails g mailer Posts</code></pre>
+          <p>This creates <code>app/mailers/posts_mailer.rb</code></p>
+        </section>
+        <section>
+          <h3>And then define an email</h3>
+          <code>app/mailers/posts_mailer.rb</code>
           <pre><code class="ruby">def email_author(params)<br/>
-   @comment = comment<br/>
+   @comment = params<br/>
    mail(to: @comment.post.author.email, from: 'youremail@gmail.com', subject: "New Comment from #{@comment.email}")<br/>
 end</code></pre>
+          <p>This goes between <code>class</code> and <code>end</code></p>
+        </section>
+
+        <section>
+          <h3>And what the email says</h3>
+          <code>app/views/posts/email_author.text.erb</code>
+          <pre><code>New comment on &lt;%= @comment.post.title %&gt;</code></pre>
         </section>
 
         <section>
           <h3>How do we call it?</h3>
+          <code>app/controllers/comments_controller.rb</code>
           <pre><code class="ruby"># CommentsController<br/>
 def create
    @comment.save
    PostsMailer.email_author(@comment).deliver_now
 end</code></pre>
-            <!-- talk about what this is doing? -->
         </section>
         <section>
           <h3>Testing email is hard</h3>
-          <p>But there's a gem called Letter Opener, that makes email easy</p>
-          <pre><code class="ruby">#Gemfile<br/>gem 'letter_opener_web'</code></pre>
+          <p>But there's a gem called Letter Opener, that makes email easier. There are gems for lots of things, this is the first one we're installing apart from Rails.</p>
+          <p>We'll need to add it to <code>Gemfile</code>, install it, configure it, and restart Rails to use it.</p>
+        </section>
+        <section>
+          <h3>Adding to Gemfile</h3>
+          <code>/Gemfile</code>
+          <pre><code class="ruby">gem 'letter_opener_web'</code></pre>
+          <p>Add it to the bottom of the file.</p>
+        </section>
+        <section>
+          <h3>Installing it</h3>
           <pre><code class="command-line">$ bundle install</code></pre>
-          <pre><code class="ruby">#config/environments/development.rb<br>config.action_mailer.delivery_method = :letter_opener</pre></code>
-          <p>Be sure to restart <code>rails s</code> when you change your Gemfile</p>
-          <!-- talk about gems here -->
+          <p>Bundler run run gem install for each thing in your Gemfile</p>
         </section>
         <section>
-          <h3>Heroku</h3>
-          <p>Tool check!</p>
-          <pre><code class="command-line">
-$ heroku --help
-$ git --help             
-          </code></pre>
-          <p>If you don't get help menus back, get a TA to help you install Heroku and Git correctly.</p>
+          <h3>Configure it</h3>
+          <code>config/environments/development.rb</code>
+          <pre><code class="ruby">config.action_mailer.delivery_method = :letter_opener</pre></code>
+          <p>Near the top of the file</p>
         </section>
-
-<!-- BREAK and time for anyone lacking tools to catch up --> 
         <section>
-          <h3>Heroku</h3>
-          <p>Let's follow <a href="http://curriculum.railsbridge.org/intro-to-rails/deploying_to_heroku" alt="Railsbridge deploy to heroku instructions">Railsbridge's instructions</a>.</p>
-          <p>There is one correction- step 4 on the next slide.</p>
-        </section>
-
-<!-- Instructor leads students in the steps necessary to deploy an app to Heroku, including discussion on different databases, groups in Gemfile, database configuration, the Heroku command line tools. Approx 25 minutes. --> 
-        <section>
-          <h3>Heroku</h3>
-          <p>As of this writing, steps to deploy to Heroku are:</p>
-          <ol>
-            <li>Create Heroku app in command line</li>
-            <li>Edit the Gemfile to add Postgres to appropriate groups</li>
-            <li>Apply the Gemfile changes</li>
-            <li>Change the production group in config/database.yml to:
-            <pre><code class="ruby">
-production:
-  adapter: postgresql
-  database: db/production            
-          </code></pre></li>
-            <li>Add and commit changes with Git</li>
-            <li>Push to heroku</li>
-            <li>Run database migrations and seed data in terminal</li>
-            <li>Visit application, be super proud!</li>
-          </ol>
-        </section>
-
-<!-- Seeds. Approx 15 minutes. --> 
-        <section>
-          <h3>Seeds</h3>
-          <p>In db/seeds.rb, you can write code that will populate the database. Syntax is exactly like the Rails Console, so it should look familiar to you.</p>
-          <p>Whenever the app is setup on a new machine (your collaborator's, Heroku's servers, etc), 'rake db:seed' can be run, and the database will be populated with the data from seed file. Sweet!</p>
-        </section>
-
-        <section>
-          <h3>Seeds</h3>
-          <p>In my db/seeds.rb file, I added this: </p>
-          <pre><code class="ruby">
-Artist.create(name: "Shonen Knife", hometown: "Osaka")
-Artist.create(name: "Shakira", hometown: "Barranquilla")
-Artist.create(name: "Beyonce", hometown: "Houston")
-Artist.create(name: "Teagan and Sara", hometown: "Calgary")
-        </code></pre>
-        </section>
-
-        <section>
-          <h3>Seeds</h3>
-          <p>After saving db/seeds.rb, in the terminal run:</p>
-          <pre><code class="command-line">
-$ rake db:seed
-          </code></pre>
-          <p>After pushing your changes to Heroku, in the terminal run:</p>
-          <pre><code class="command-line">
-$ heroku run rake db:seed
-          </code></pre>
+          <h3>Restart Rails</h3>
+          <p>You need to restart rails when you change your Gems. </p>
+          <pre><code class="command-line">((ctrl+c))
+$ rails s</code></pre>
         </section>
 
 <!-- Questions/resources for further learning. Approx 10 mins. -->
@@ -155,39 +119,37 @@ $ heroku run rake db:seed
 
         <section> 
           <h3>Further Resources</h3>
-            <table style="font-size: 24px; line-height: 1.5em;">
-              <tr>
-                <td><a href="http://www.ruby-doc.org/">Ruby-doc.org</a></td>
-                <td>Official Ruby documentation</td>
-              </tr>
-              <tr>
-                <td><a href="http://guides.rubyonrails.org/">Ruby on Rails Guides</a></td>
-                <td>Excellent documentation for Rails</td>
-              </tr>
-              <tr>
-                <td><a href="http://railscasts.com/">Rails Casts</a></td>
-                <td>Screencasts on how to do almost everything with Rails</td>
-              </tr>
-              <tr>
-                <td><a href="http://ruby.railstutorial.org/">The Rails Tutorial</a></td>
-                <td>Great free (HTML version) book with step-by-step instructions on building Rails apps</td>
-              </tr>
-              <tr>
-                <td><a href="http://rubygems.org/">RubyGems.org</a></td>
-                <td>Listing of all available Gems</td>
-              </tr>
-              <tr>
-                <td><a href="http://ruby.learncodethehardway.org/">Ruby the Hard Way</a></td>
-                <td>Fun, free (HTML version) book with great information about programming</td>
-              </tr>
-              <tr>
-                <td><a href="http://girldevelopit.com/">Girl Develop It</a></td>
-                <td>Local workshops, events, and coding sessions with awesome people &lt;3</td>
-              </tr>
-            </table>
-          </section>
-                                                      
-       
+          <table style="font-size: 24px; line-height: 1.5em;">
+            <tr>
+              <td><a href="http://www.ruby-doc.org/">Ruby-doc.org</a></td>
+              <td>Official Ruby documentation</td>
+            </tr>
+            <tr>
+              <td><a href="http://guides.rubyonrails.org/">Ruby on Rails Guides</a></td>
+              <td>Excellent documentation for Rails</td>
+            </tr>
+            <tr>
+              <td><a href="http://railscasts.com/">Rails Casts</a></td>
+              <td>Screencasts on how to do almost everything with Rails</td>
+            </tr>
+            <tr>
+              <td><a href="http://ruby.railstutorial.org/">The Rails Tutorial</a></td>
+              <td>Great free (HTML version) book with step-by-step instructions on building Rails apps</td>
+            </tr>
+            <tr>
+              <td><a href="http://rubygems.org/">RubyGems.org</a></td>
+              <td>Listing of all available Gems</td>
+            </tr>
+            <tr>
+              <td><a href="http://ruby.learncodethehardway.org/">Ruby the Hard Way</a></td>
+              <td>Fun, free (HTML version) book with great information about programming</td>
+            </tr>
+            <tr>
+              <td><a href="http://girldevelopit.com/">Girl Develop It</a></td>
+              <td>Local workshops, events, and coding sessions with awesome people &lt;3</td>
+            </tr>
+          </table>
+        </section>
       </div>
       <footer>
         <div class="copyright">

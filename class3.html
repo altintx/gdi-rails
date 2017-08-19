@@ -129,17 +129,17 @@ end</code></pre>
           <h3>Give a Model a way to declare its Param</h3>
           <code>app/models/post.rb</code>
           <p>Rails will call <code>.to_param</code> on your model to come up with its ID for Links</p>
-          <pre><code class="ruby">def to_param<br />
+          <pre><code class="ruby">def to_param
     slug
 end</code></pre>
-          <p>This tells Rails to use the value of its slug field when generating a link.</p>
+          <p>This <em>to_param</em> is just like the <code>param: </code> in our router. This tells Rails to use the value of its slug field when generating a link.</p>
         </section>
 
         <section>
           <h3>And your controller needs to switch to slug</h3>
           <code>app/controllers/posts_controller.rb</code>
           <p>set_post already exists, we'll just change it from using <code>:id</code> to <code>:slug</code></p>
-          <pre><code>def set_post<br/>
+          <pre><code>def set_post
     @post = Post.find(params[:slug])
 end</code></pre>
         </section>
@@ -159,30 +159,28 @@ end</code></pre>
           <h3>PostsController</h3>
           <code>app/controllers/posts_controller.rb</code>
           <p><code>index</code> is an existing action, but we'll replace it.</p>
-          <pre><code language="ruby">
-def index
+          <pre><code language="ruby">def index
     if params[:author]
-       @author = Author.find(params[:author])
-       @posts = @author.posts
+       author = Author.find(params[:author])
+       @posts = author.posts
     else
        @posts = Post.all
     end
 end</code></pre>
+          <p>We didn't put a <code>@</code> on author, because we won't use it in our template.</p>
         </section>
 
         <section>
           <h3>Router</h3>
           <code>config/routes.rb</code>
-          <pre><code language="ruby">
-get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
-          <p>This is creating a <code>post_by_author_path</code> helper that we'll use on the next step.</p>
+          <pre><code language="ruby">get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
+          <p>This is creating a <code>posts_by_author_path</code> helper that we'll use on the next step.</p>
         </section>
 
         <section>
           <h3>Authors Show</h3>
           <code>app/views/authors/show.html.erb</code>
-          <pre><code language="ruby">
-&lt;h3&gt;Posts&lt;/h3&gt;
+          <pre><code language="ruby">&lt;h3&gt;Posts&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;%= link_to 'All Posts', posts_by_author_path(@author) %&gt;&lt;/li&gt;
   &lt;% @author.posts.each do |post| %&gt;
@@ -195,8 +193,8 @@ get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
         <section>
           <h3>Author Model</h3>
           <code>app/models/author.rb</code>
-          <pre><code language="ruby">
-has_many :posts</code></pre>
+          <pre><code language="ruby">has_many :posts</code></pre>
+          <p>Tell Rails that we'll find posts belonging to this author.</p>
         </section>
   
         <section>
