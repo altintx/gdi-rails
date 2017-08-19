@@ -41,7 +41,6 @@
         <section>
           <img src = "images/gdi_logo_badge.png">
           <h3>Intro to Rails</h3>
-          <p>slides: http://cherimarie.github.io/gdi-rails</p>
         </section>
         
   <!-- Intro -->
@@ -71,8 +70,7 @@
         <section>
           <h3>What is routing</h3>
           <p>Routing turns a URL into a controller and action.</p>
-          <!-- right now our URLs look like /posts/1 or /authors/15 -->
-          <!-- we want them to look like /posts/hello-world or /authors/alice -->
+          <p>Right now our URLs look like <code>/posts/1</code>.  We want them to look like <code>/posts/hello</code>. </p>
         </section>
 
         <section>
@@ -95,9 +93,9 @@
 
         <section>
           <h3>Let's start with Posts</h3>
-          <p>We're going to keep working with our Blog from last class.</p>
+          <p>We're going to keep working with our Blog from the last class.</p>
           <ul>
-            <li>Let's make an AddSlugToPosts migration</li>
+            <li>Let's make an <code>AddSlugToPosts</code> migration</li>
           </ul>
         </section>
 
@@ -108,56 +106,60 @@
 
         <section>
           <h3>Instead we'll use after_create</h3>
+          <code>app/models/post.rb</code>
           <pre><code class="ruby">after_create do<br>
    self.slug = self.id + '-' + self.title.parameterize<br>
    self.save<br>
 end</code></pre>
-          </section>
+        </section>
 
-          <section>
-            <h3>These are called callbacks</h3>
-            <p>And there are a lot of them</p>
-          </section>
-          
-          <section>
-            <h3>How do we use slugs?</h3>
-            <ul>
-                <li>config/router.rb: <code class="ruby">, param: :slug</code></li>
-            </ul>
-          </section>
+        <section>
+          <h3>These are called callbacks</h3>
+          <p>And there are a lot of them</p>
+        </section>
+        
+        <section>
+          <h3>How do we use slugs?</h3>
+          <code>config/router.rb</code>
+          <p>We already have a line that says <code>resources :posts</code></p>
+          <p>We'll add to the end of it: <code class="ruby">, param: :slug</code></p>
+        </section>
 
-          <section>
-            <h3>Give a Model a way to declare its Param</h3>
-            <p>Rails will call .to_param on your model to come up with its identifier for Links</p>
-            <pre><code class="ruby">def to_param<br />
+        <section>
+          <h3>Give a Model a way to declare its Param</h3>
+          <code>app/models/post.rb</code>
+          <p>Rails will call <code>.to_param</code> on your model to come up with its ID for Links</p>
+          <pre><code class="ruby">def to_param<br />
     slug
 end</code></pre>
-          </section>
+          <p>This tells Rails to use the value of its slug field when generating a link.</p>
+        </section>
 
-          <section>
-            <h3>And your controller needs to switch to slug</h3>
-            <pre><code>def set_post<br/>
+        <section>
+          <h3>And your controller needs to switch to slug</h3>
+          <code>app/controllers/posts_controller.rb</code>
+          <p>set_post already exists, we'll just change it from using <code>:id</code> to <code>:slug</code></p>
+          <pre><code>def set_post<br/>
     @post = Post.find(params[:slug])
 end</code></pre>
-          </section>
+        </section>
 
-          <section>
-            <h3>Authors have slugs, too</h3>
-          </section>
+        <section>
+          <h3>But we wouldn't do it to Comments</h3>
+          <!-- trusting user input -->
+          <p>We wouldn't want to allow something a user typed to appear to be coming from us. It might be derogatory, embarassing, and is absolutely unneccessary.</p>
+        </section>
 
-          <section>
-            <h3>But we wouldn't do it to Comments</h3>
-            <!-- trusting user input -->
-          </section>
+        <section>
+          <h3>Filtering</h3>
+          <p>Blogs have posts by multiple authors. Let's build a way to see the posts by a certain author.</p>
+        </section>
 
-          <section>
-            <h3>Filtering</h3>
-            <p>Blogs have posts by multiple authors. Let's build a way to see the posts by a certain author.</p>
-          </section>
-
-          <section>
-            <h3>PostsController</h3>
-            <pre><code language="ruby">
+        <section>
+          <h3>PostsController</h3>
+          <code>app/controllers/posts_controller.rb</code>
+          <p><code>index</code> is an existing action, but we'll replace it.</p>
+          <pre><code language="ruby">
 def index
     if params[:author]
        @author = Author.find(params[:author])
@@ -166,11 +168,20 @@ def index
        @posts = Post.all
     end
 end</code></pre>
-          </section>
+        </section>
 
-          <section>
-              <h3>Authors show.html.erb</h3>
-              <pre><code language="ruby">
+        <section>
+          <h3>Router</h3>
+          <code>config/routes.rb</code>
+          <pre><code language="ruby">
+get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
+          <p>This is creating a <code>post_by_author_path</code> helper that we'll use on the next step.</p>
+        </section>
+
+        <section>
+          <h3>Authors Show</h3>
+          <code>app/views/authors/show.html.erb</code>
+          <pre><code language="ruby">
 &lt;h3&gt;Posts&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;%= link_to 'All Posts', posts_by_author_path(@author) %&gt;&lt;/li&gt;
@@ -179,24 +190,19 @@ end</code></pre>
   &lt;% end %&gt;
 &lt;/ul&gt;
 </code></pre>
-            </section>
-
-            <section>
-                <h3>Router</h3>
-                <pre><code language="ruby">
-get '/posts/author/:author' => 'posts#index', as: 'posts_by_author'</code></pre>
-              </section>
-              <section>
-                  <h3>Author Model</h3>
-                  <pre><code language="ruby">
-  has_many :posts</code></pre>
-                </section>
+        </section>
+            
+        <section>
+          <h3>Author Model</h3>
+          <code>app/models/author.rb</code>
+          <pre><code language="ruby">
+has_many :posts</code></pre>
+        </section>
   
-          <section>
-            <h3>And let's see it work</h3>
-            <p><a href="./class4.html">Class 4</a></p>
-          </section>
-
+        <section>
+          <h3>And let's see it work</h3>
+          <p><a href="./class4.html">Class 4</a></p>
+        </section>
       </div>
       <footer>
         <div class="copyright">
