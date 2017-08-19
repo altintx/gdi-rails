@@ -38,7 +38,6 @@
         <section>
           <img src = "images/gdi_logo_badge.png">
           <h3>Intro to Rails</h3>
-          <p>slides: http://cherimarie.github.io/gdi-rails</p>
         </section>
         
         <section>
@@ -62,24 +61,22 @@
             <li>Body</li>
             <li>Date</li>
           </ul>
-          <!-- 10 minute discussion, write out requirements on a whiteboard if possible -->
         </section>
 
         <section>
           <h3>Naming Conventions</h3>
-          <p>Rails guesses you'll name things a certain ways.</p>
+          <p>Rails assumes you'll name things a certain ways.</p>
           <ul>
             <li>Models are singular <code>Person</code></li>
-            <li>Controllers are pluralized models + Controller<code>PeopleController</code></li>
-            <li>Templates are same base as controller but lowercase and underscored <code>people</code></li>
-            <li>Files are lowercased and underscored <code>people_controller.rb</code></li>
-            <li>Fields are lowercased and underscored <code>first_name</code></li>
+            <li>Controllers are pluralized model namess + Controller <code>PeopleController</code></li>
+            <li>Templates are same base as controller but lowercase and underscored if multiple words <code>people</code></li>
+            <li>Files are lowercased and underscored if multiple words <code>people_controller.rb</code></li>
+            <li>Fields are lowercased and underscored if multiple words <code>first_name</code></li>
           </ul>
         </section>
 
         <section>
           <h3>Let's Build a blog!</h3>
-          <h4>Don't blink</h4>
           <pre><code class="command-line">
 $ rails new blog
 $ cd blog
@@ -89,11 +86,26 @@ $ rails generate scaffold Post title:string body:string
         </section>
 
         <section>
+          <h3>Scaffolding</h3>
+          <p>In the first part of the class, we generated a model (&amp; migration), a controller, and made a template ERB file.</p>
+          <p>Scaffolding does all that in one shot, and it's generating a number of templates:</p>
+          <ul><li>index</li>
+              <li>edit</li>
+              <li>new</li>
+              <li>show</li>
+              <li>_form</li></ul>
+          <p>Scaffolding can only happen once (per model). It doesn't change what already exists.</p>
+        </section>
+
+        <section>
           <h3>What about the date?</h3>
+          <p>Rails gives us a created_at and updated_at automatically. created_at is set once, updated_at is set every time
+            our model is saved.</p>
         </section>  
 
         <section>
           <h3>Pending migration?</h3>
+          <p>When we scaffolded Rails generated a migratin. Until we run db:migrate, we'll get an error. We'll run it now.</p>
           <!-- talk about what a migration is -->
           <p><code>rails generate scaffold</code> made a migration, too.</o>
           <pre><code class="command-line">
@@ -106,12 +118,12 @@ $ rails db:migrate
           <p>Let's try it</p>
           <pre><code class="command-line">$ rails s</code></pre>
           <p>If you're still running the Students example, you'll want to shut it down before running this.</p>
-          <!-- let's change the welcome page -->
         </section>
 
         <section>
           <h3>Lets change the welcome page</h3>
           <p>We did this in the prior example, in config/routes.rb</p>
+          <pre><code class="ruby">root 'posts#index'</code></pre>
         </section>  
         
         <section>
@@ -122,6 +134,7 @@ $ rails db:migrate
 
         <section>
           <h3>So what does an author need?</h3>
+          <h4>Let's develop it!</h4>
           <ul>
             <li>name</li>
             <li>email</li>
@@ -132,45 +145,79 @@ $ rails db:migrate
 
         <section>
           <h3>But we already scaffolded Post</h3>
-          <p>So we need to make a migration for it. Migrations let us change existing structures.</p>
+          <h4>Let's develop it!</h4>
+          <p>So we need to make a migration for it. Migrations let us change existing models.</p>
           <pre><code class="command-line">$ rails generate migration AddAuthorToPosts author:references<br/>
 $ rails db:migrate</code></pre>
-          <!-- rails likes when you add blah to blah -->
+          <p>When you use the <code>Add<em>Field</em>To<em>PluralModel</em></code> form, Rails knows what you're talking about.</p>
         </section>
         
         <section>
           <h3>Now we modify the existing screens</h3>
-          <ul>
-            <li>app/models/post.rb<pre><code class="ruby">belongs_to :author</code></pre></li>
-            <li>app/controllers/posts_controller.rb
-              <ul>
-                <li><pre><code class="ruby">params.require(:post).permit(:title, :body, :author_id)</code></pre></li>
-                <li><pre><code class="ruby">before_action only: [:create, :new, :update, :edit] do 
-  @authors = Author.All
-end</code></pre></li>
-            <li>app/views/posts/_form.html.erb
-              <pre><code class="ruby">&lt;%=f.collection_select :author_id, @authors,:id,:name%&gt;</code></pre>
-            </li>
-            </li>
-            <li>app/views/posts/show.html.erb
-              <pre><code class="ruby">&lt;%= @post.author.name%&gt;</code></pre>
-            </li>
-          </ul>
+          <p>We need to change the Post model to make it aware of the Author relationship, the PostsController to make it aware of the author field, the Post's form to handle the author field, and the Post's <em>show</em> to display the author.</p>
+          <p>There are about five changes and we have to do them all before we can test. We'll do one at a time.</p>
         </section>
 
         <section>
-          <h3>See? Changing requirements weren't the end of the world</h3>
+          <h3>Post Model</h3>
+          <code>app/models/post.rb</code>
+          <pre><code class="ruby">belongs_to :author</code></pre>
+          <p>This will go between <code>class</code> and <code>end</code></p>
+        </section>
+
+        <section>
+          <h3>Posts Controller</h3>
+          <code>app/controllers/posts_controller.rb</code>
+          <p>The controller defines what fields are allowed in. By default they're the same as the fields we scaffolded. Because we made a migration, we need to add that new field.</p>
+          <p>Around line 72, there is a <code class="ruby">def post_params</code>, and we need to add <code>:author_id</code> to its allowed list.</p>
+          <pre><code class="ruby">def post_params
+   params.require(:post).permit(:title, :body, :author_id)
+end</code></pre>
+          <p>We will cause an error if anything but these three fields are submitted by the user.</p>
+        </section>
+
+        <section>
+          <h3>Posts Controller</h3>
+          <code>app/controllers/posts_controller.rb</code>
+          <p>When a Post is being created or edited, we need to allow the user to pick an author from a list. To know what's on that list, we'll look up the choiced.</p>
+          <pre><code class="ruby">before_action only: [:create, :new, :update, :edit] do 
+@authors = Author.All
+end</code></pre>
+          <p>This should go on the next line after the existing <code class="ruby">before_action</code> near the top of the file.</p>
+        </section>
+        <section>
+          <h3>Form Template</h3>
+          <code>app/views/posts/_form.html.erb</code>
+          <p>We need to display a list of all authors, so that we can pick an author for this specific blog post.</p>
+          <pre><code class="ruby">&lt;%=f.collection_select :author_id, @authors,:id,:name%&gt;</code></pre>
+          <p>Let's put this between the title and the body</p>
+        </section>
+        <section>
+          <h3>Show Template</h3>
+          <code>app/views/posts/show.html.erb</code>
+          <p>When viewing a Post, we need to know who its author is.</p>
+          <pre><code class="ruby">Author: &lt;%= @post.author.name%&gt;</code></pre>
+          <p>We can put this whereever in the HTML is makes sense to.</p>
+        </section>
+
+        <section>
+          <h3>Changing requirements means lots of little changes</h3>
+          <p>If we'd only changed the model, the user couldn't have seen anything.</p>
+          <p>If we'd only changed the form, most users wouldn't see the author.</p>
+          <p>If we'd only changed the show page, we wouldn't have ability to set an author.</p>
+          <p>If we'd only changed the controller, nothing would appear to have changed.</p>
         </section>
 
         <section>
           <h3>Let's tackle Comments</h3>
           <p>This is a big to do. Let's go 1 step at a time. Refer back to what we did with Authors.</p>
           <ul>
-            <li>Scaffold - remember post:references</li>
+            <li>Scaffold - remember <cpde>post:references</code></li>
             <li>Migrate</li>
             <li>Add <code class="ruby">has_many</code> to Post model</li>
             <li>Display comments &amp; link to new comment on posts/show.html.erb</li>
-            <li>Add before_action for posts and Posts collection to CommentsController and comments/form</li>
+            <li>Add before_action for posts to CommentsController</li>
+            <li>Add Posts collection to comments/_form</li>
           </ul>
         </section>
 

@@ -36,7 +36,6 @@
         <section>
           <img src = "images/gdi_logo_badge.png">
           <h3>Intro to Rails</h3>
-          <p>slides: http://cherimarie.github.io/gdi-rails</p>
         </section>
 
         <section>
@@ -107,11 +106,15 @@
 
         <section>
           <h3>Installation Check</h3>
-          <p>Run these commands in the terminal. You should expect them to return a number, like '5.0' for Rails or '2.0.0' for Ruby. 
+          <p>Run these commands in the terminal. You should expect them to return a number, like '5.0' for Rails or '2.3.1' for Ruby. 
           <pre><code class="command-line">
 $ ruby -v
 $ rails -v
           </code></pre>
+
+          <p>If Ruby is older than 2.3, you'll need to update it. <br><code class="command-line">brew install ruby</code> for Mac<br>
+            Or <code class="command-line">sudo apt-get install ruby</code> for Linux</p>
+
         </section>
 
         <section>
@@ -139,37 +142,37 @@ $ rails server
         </section>
 
         <section>
-            <h3>Model View Controller Architecture</h3>
-            <ul>
-              <li>Models hold logic about objects &amp; interact with database.</li>
-              <li>Views are presentation.</li>
-              <li>Controllers coordinate the two. </li>
-            </ul>
-            <img src="images/mvc.gif" />
-          </section>
+          <h3>Model View Controller Architecture</h3>
+          <ul>
+            <li>Models hold logic about objects &amp; interact with database.</li>
+            <li>Views are presentation.</li>
+            <li>Controllers coordinate the two. </li>
+          </ul>
+        </section>
   
-          <section>
-            <h3>MVC Goal</h3>
-            <p>By isolating logic and presentation, you remove dependencies. </p>
-  
-            <p>Views don’t need to know how their data is generated, and Models don’t need to know how their data is used. Changes to one won’t affect the other.</p>
-          </section>
-  
-          <section>
-            <h3>MVC Explanation</h3>
-            <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding <code class="ruby">Student.all</code> </p>
-  
-            <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
-          </section>  
+        <section>
+          <h3>MVC Goal</h3>
+          <p>By isolating logic and presentation, you remove dependencies. </p>
+
+          <p>Views don’t need to know how their data is generated, and Models don’t need to know how their data is used. Changes to one won’t affect the other.</p>
+        </section>
+
+        <section>
+          <h3>MVC Explanation</h3>
+          <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding <code class="ruby">Student.all</code> </p>
+
+          <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
+        </section>]  
 
         <section>
           <h3>Step 1</h3>
           <h4>Add a Student Model</h4>
           <p>In the terminal, generate the model, then run database migration:</p>
           <pre><code class="command-line">
-$ rails generate model student bio:string full_name:string
+$ rails generate model Student bio:string full_name:string
 $ rails db:migrate 
           </code></pre>
+          <p>The model's name is singular, like <em>Student</em> or <em>Person</em></p>
         </section>
 
         <section>
@@ -193,8 +196,8 @@ $ rails console
           </code></pre>
           <p>Then, create a Student object:</p>
           <pre><code class="command-line">
-> Student.create(full_name: "Hermione Granger", 
-                 bio: "Dedicated student")
+> Student.create full_name: "Hermione Granger", 
+                 bio: "Dedicated student"
           </code></pre>
           <p>Note: close the console by entering the word 'quit'.</p>
         </section>
@@ -206,17 +209,14 @@ $ rails console
         <p>CRUD Operations:</p></div>
         <pre><code class="command-line">
 #Create
-> Student.create
-> Student.create(full_name: "Bert", bio: "Bestie of Ernie")
+> record = Student.create
 #Read
 > Student.all
-> Student.first
-> student = Student.find(1) 
+> record = Student.second
 #Update
-> student.update_attributes(full_name: "Bert Bernard")
-> student.update(bio: "Scrabble champ of Sesame Street")
+> record.update full_name: "Big Bird", bio: "Scrabble champ of Sesame Street"
 #Destroy
-> student.destroy 
+> record.destroy 
         </code></pre>
         </section>
 
@@ -227,13 +227,14 @@ $ rails console
           <pre><code class="command-line">
 $ rails generate controller Students
           </code></pre>
+          <p>The controller's name is the same as the models name, but plural, like <em>Students</em> or <em>People</em></p>
           <p>Generating this controller also creates an app/views/students directory. </p>
         </section>
 
         <section>
           <h3>Step 3</h3>
           <h4>Create a Students Controller</h4>
-          <p>In your text editor, open the generated app/controllers/students_controller.rb, and add an ‘index’ method to the class definition:</p>
+          <p>In your text editor, open the generated app/controllers/students_controller.rb, and add an ‘index’ method to the class definition. It will go between the <code class="ruby">class</code> and <code>end</code> lines.</p>
           <pre><code class="ruby">
 def index 
   @students = Student.all 
@@ -251,6 +252,8 @@ end           </code></pre>
   <%= student.bio %>
 <% end %>
           </code></pre>
+          <p>Templates (Views) are named the same as the controller's action name. <code class="ruby">def index</code> becomes <code>index.html.erb</code></p>
+          <p>ERB explanation on next slide</p>
         </section>
 
         <section>
@@ -297,10 +300,21 @@ root 'students#index'
         </section>
 
         <section>
+            <h3>Model View Controller Architecture</h3>
+            <ul>
+              <li>Models hold logic about objects &amp; interact with database.</li>
+              <li>Views are presentation.</li>
+              <li>Controllers coordinate the two. </li>
+            </ul>
+            <img src="images/mvc.gif" />
+          </section>
+    
+
+        <section>
           <h3>What did we just do?</h3>
           <ul>
             <li>Made a new Rails application</li>
-            <li>Added a Student model, with bio & full_name attributes</li>
+            <li>Added a Student model, with bio &amp; full_name attributes</li>
             <li>Added a student record to the database, using Rails Console</li>
             <li>Created a Students controller</li>
             <li>Created a view for the Student controller's index action</li>
