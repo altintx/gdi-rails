@@ -4,8 +4,9 @@ This is an Intro to Rails course, intended for eventual inclusion in the Girl De
 The course is meant to be taught in four two-hour workshops. Each of the slides and practice files are customizable according to the needs of a given class or audience.
 
 **Cost:** $100
-**Dates:** Part 1 2017/09/09, Saturday September 9 12:00
-Part 2 2017/09/16 Saturday, September 16 12:00
+
+**Dates:** Part 1 2017/09/09, Saturday September 9 12:00pm-4:00pm & Part 2 2017/09/16 Saturday, September 16 12:00pm-4:00pm
+
 **Location:** FatPipe ABQ - 200 Broadway NE, Albuquerque, NM
 
 Register for class at https://www.meetup.com/Girl-Develop-It-Albuquerque/events/242195534/
