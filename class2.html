@@ -1,37 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
 
-    <title>Intro to Rails</title>
+		<title>Intro to Ruby on Rails</title>
 
-    <meta name="description" content="This is an Intro to Rails course, intended for eventual inclusion in the Girl Develop It Core Curriculum. All material by Cheri Allen, inspired by Railsbridge.
+		<meta name="description" content="Girl Develop It framework for easily creating beautiful presentations using HTML in GDI theme. Forked from Hakim El Hattab's reveal.js">
+		<meta name="author" content="Girl Develop It">
 
-    The course is meant to be taught in four two-hour workshops. Each of the slides and practice files are customizable according to the needs of a given class or audience.">
-    <meta name="author" content="Girl Develop It">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<link rel="stylesheet" href="dist/css/reveal.css">
+		<link rel="stylesheet" href="dist/css/default.css" id="theme">
 
-     <link rel="stylesheet" href="reveal.js/css/reveal.css">
-    <link rel="stylesheet" href="reveal.js/css/theme/gdicool.css" id="theme">
-    <link rel="stylesheet" href="overwrite.css">
+		<!-- For syntax highlighting -->
+		<!-- light editor --><link rel="stylesheet" href="dist/css/light.css">
+		<!-- dark editor <link rel="stylesheet" href="dist/css/dark.css">-->
+		<!-- <link rel="stylesheet" href="dist/css/zenburn.css"> -->
 
-    <!-- For syntax highlighting -->
-    <!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
-    <!-- dark editor--><link rel="stylesheet" href="reveal.js/lib/css/dark.css">
+		<link rel="stylesheet" href="plugin/accessibility-helper/css/accessibility-helper.css">
 
-    <!-- If use the PDF print sheet so students can print slides-->
-    
-    <link rel="stylesheet" href="reveal.js/css/print/pdf.css" type="text/css" media="print">
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
 
-  </head>
+		<!-- If use the PDF print sheet so students can print slides-->
 
-  <body>
+		<link rel="stylesheet" href="dist/css/print/pdf.css" type="text/css" media="print">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+		<!--[if lt IE 9]>
+        <script src="dist/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
 
-    <div class="reveal">
+	<body>
 
+		<div class="reveal">
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <!-- Opening slide -->
@@ -57,9 +70,9 @@
         <section>
           <h3>What makes a post a post</h3>
           <ul>
-            <li>Title</li>
-            <li>Body</li>
-            <li>Date</li>
+            <li>title</li>
+            <li>body</li>
+            <li>date</li>
           </ul>
         </section>
 
@@ -105,8 +118,7 @@ $ rails generate scaffold Post title:string body:string
 
         <section>
           <h3>Pending migration?</h3>
-          <p>When we scaffolded Rails generated a migratin. Until we run db:migrate, we'll get an error. We'll run it now.</p>
-          <!-- talk about what a migration is -->
+          <p>When we scaffolded Rails generated a migration. Until we run db:migrate, we'll get an error. We'll run it now.</p>
           <p><code>rails generate scaffold</code> made a migration, too.</o>
           <pre><code class="command-line">
 $ rails db:migrate
@@ -118,12 +130,14 @@ $ rails db:migrate
           <p>Let's try it</p>
           <pre><code class="command-line">$ rails s</code></pre>
           <p>If you're still running the Students example, you'll want to shut it down before running this.</p>
+          <p>Open <a href="http://localhost:3000/posts">localhost:3000/posts</a> in your browser and play with the generated screens.</p>
         </section>
 
         <section>
           <h3>Lets change the welcome page</h3>
           <p>We did this in the prior example, in config/routes.rb</p>
           <pre><code class="ruby">root 'posts#index'</code></pre>
+          <p>Open <a href="http://localhost:3000/">localhost:3000/</a> in your browser and play with the generated screens.</p>
         </section>  
         
         <section>
@@ -144,12 +158,11 @@ $ rails db:migrate
         </section>
 
         <section>
-          <h3>But we already scaffolded Post</h3>
-          <h4>Let's develop it!</h4>
+          <h3>But we already scaffolded Post, so we need to do this change manually</h3>
           <p>So we need to make a migration for it. Migrations let us change existing models.</p>
-          <pre><code class="command-line">$ rails generate migration AddAuthorToPosts author:references<br/>
+          <pre><code class="command-line">$ rails generate migration AddAuthorToPosts author:references
 $ rails db:migrate</code></pre>
-          <p>When you use the <code>Add<em>Field</em>To<em>PluralModel</em></code> form, Rails knows what you're talking about.</p>
+          <p>When you use the Add<em>Field</em>To<em>PluralModel</em> form, Rails knows what you're talking about.</p>
         </section>
         
         <section>
@@ -196,8 +209,9 @@ end</code></pre>
           <h3>Show Template</h3>
           <code>app/views/posts/show.html.erb</code>
           <p>When viewing a Post, we need to know who its author is.</p>
-          <pre><code class="ruby">Author: &lt;%= @post.author.name%&gt;</code></pre>
+          <pre><code class="ruby">Author: &lt;%= @post.author.name if @post.author%&gt;</code></pre>
           <p>We can put this wherever in the HTML is makes sense to.</p>
+          <p>And now let's take a look at what we've done <a href="http://localhost:3000/">http://localhost:3000/</a></p>
         </section>
 
         <section>
@@ -233,45 +247,45 @@ end</code></pre>
           </ul>
           <p><a href="./class3.html">Class 3</a></p>
         </section>
-      </div>
-      <footer>
+      
+			</div>
+  		<footer>
         <div class="copyright">
-          Intro to Rails
+          Intro to Ruby on Rails -- GDI Albuquerque --
           <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
         </div>
       </footer>
-    </div>
+		</div>
 
 
-   
-    <script src="reveal.js/lib/js/head.min.js"></script>
-    <script src="reveal.js/js/reveal.min.js"></script>
+		<script src="dist/js/head.min.js"></script>
+		<script src="dist/js/reveal.min.js"></script>
 
-    <script>
+		<script>
 
-      // Full list of configuration options available here:
-      // https://github.com/hakimel/reveal.js#configuration
-      Reveal.initialize({
-        controls: true,
-        progress: true,
-        history: true,
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
 
-        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-        // Optional libraries used to extend on reveal.js
-        dependencies: [
-          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-        ]
-      });
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'dist/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/accessibility-helper/js/accessibility-helper.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
 
-    </script>
+		</script>
 
-
-  </body>
+	</body>
 </html>

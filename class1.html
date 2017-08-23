@@ -1,37 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
 
-    <title>Intro to Rails</title>
+		<title>Intro to Ruby on Rails</title>
 
-    <meta name="description" content="This is an Intro to Rails course, intended for eventual inclusion in the Girl Develop It Core Curriculum. All material by Cheri Allen, inspired by Railsbridge.
+		<meta name="description" content="Girl Develop It framework for easily creating beautiful presentations using HTML in GDI theme. Forked from Hakim El Hattab's reveal.js">
+		<meta name="author" content="Girl Develop It">
 
-    The course is meant to be taught in four two-hour workshops. Each of the slides and practice files are customizable according to the needs of a given class or audience.">
-    <meta name="author" content="Girl Develop It">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<link rel="stylesheet" href="dist/css/reveal.css">
+		<link rel="stylesheet" href="dist/css/default.css" id="theme">
 
-    <link rel="stylesheet" href="reveal.js/css/reveal.css">
-    <link rel="stylesheet" href="reveal.js/css/theme/gdicool.css" id="theme">
-    <link rel="stylesheet" href="overwrite.css">
+		<!-- For syntax highlighting -->
+		<!-- light editor --><link rel="stylesheet" href="dist/css/light.css">
+		<!-- dark editor <link rel="stylesheet" href="dist/css/dark.css">-->
+		<!-- <link rel="stylesheet" href="dist/css/zenburn.css"> -->
 
-    <!-- For syntax highlighting -->
-    <!-- light editor<link rel="stylesheet" href="lib/css/light.css">-->
-    <!-- dark editor--><link rel="stylesheet" href="reveal.js/lib/css/dark.css">
+		<link rel="stylesheet" href="plugin/accessibility-helper/css/accessibility-helper.css">
 
-    <!-- If use the PDF print sheet so students can print slides-->
-    
-    <link rel="stylesheet" href="reveal.js/css/print/pdf.css" type="text/css" media="print">
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
 
-    <!--[if lt IE 9]>
-    <script src="lib/js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="reveal">
+		<!-- If use the PDF print sheet so students can print slides-->
+
+		<link rel="stylesheet" href="dist/css/print/pdf.css" type="text/css" media="print">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+		<!--[if lt IE 9]>
+        <script src="dist/js/html5shiv.js"></script>
+        <![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
       <div class="slides">
         <section>
           <img src = "images/gdi_logo_badge.png">
@@ -70,7 +84,7 @@
           <ul>
             <li>An open-source, full stack web application framework</li>
             <li>Written in the Ruby language</li>
-            <li>Makes web appplications that use a database easy</li>
+            <li>Makes web appplications that use a database easy (CRUD apps)</li>
             <li>Has a thriving community, tons of code &amp; support</li>
           </ul>
           </div>
@@ -82,7 +96,7 @@
             <ul>
               <li>Ruby is a lanuage, Rails is a framework</li>
               <li>You can write Ruby without Rails</li>
-              <li>Ruby provides ideas like variables, object, strings</li>
+              <li>Ruby provides ideas like variables, objects, and strings</li>
               <li>Rails does things like run on the web, talks to the database</li>
             </ul>
           </div>
@@ -93,6 +107,8 @@
             <ul>
               <li>Front &amp; Back Ends</li>
               <li>Just backend</li>
+              <p>If you're using React or Angular, you'd use it as just a backend. We'll be doing the user interface in Rails
+                in this class, so we'll do the front end here too.</p>
             </ul>
           </section>
         
@@ -107,8 +123,7 @@
         <section>
           <h3>Installation Check</h3>
           <p>Run these commands in the terminal. You should expect them to return a number, like '5.0' for Rails or '2.3.1' for Ruby. 
-          <pre><code class="command-line">
-$ ruby -v
+          <pre><code class="command-line">$ ruby -v
 $ rails -v
           </code></pre>
 
@@ -120,12 +135,11 @@ $ rails -v
         <section>
           <h3>Make a Rails app!</h3>
           <p>Navigate to a project directory in your terminal, then run:</p>
-          <pre><code class="command-line">
-$ rails new TestApp
+          <pre><code class="command-line">$ rails new TestApp
 $ cd TestApp
 $ rails server
           </code></pre>
-          <p>Now, visit localhost:3000 in your browser to view your app!</p>
+          <p>Now, visit <a href="http://localhost:3000/">http://localhost:3000/</a> in your browser to view your app!</p>
         </section>
 
         <section>
@@ -133,12 +147,6 @@ $ rails server
           <h4>What just happened?</h4>
           <p>We told Rails to build a new app called TestApp, then navigated into it and started a server so we could view it live in the browser. Sweet.</p>
           <p>Note: you can shut the server down by entering Ctrl-c</p>
-        </section>
-
-        <section>
-          <h3>Next Step:</h3>
-          <h4>Make App...</h4>
-          <img src="images/interesting.jpeg" alt="A cat pondering some grass" />
         </section>
 
         <section>
@@ -162,7 +170,13 @@ $ rails server
           <p class="smalltext">An app this basic doesn’t really have any logic to put in the model. The controller can handle basic database actions like finding <code class="ruby">Student.all</code> </p>
 
           <p class="smalltext">Every view that your app has must have an associated controller method. This method will usually pass data to the view, but not necessarily. </p>
-        </section>]  
+        </section>
+
+        <section>
+          <h3>Next Step:</h3>
+          <h4>Make App...</h4>
+          <img src="images/interesting.jpeg" alt="A cat pondering some grass" />
+        </section>
 
         <section>
           <h3>Step 1</h3>
@@ -176,15 +190,9 @@ $ rails db:migrate
         </section>
 
         <section>
-          <h3>Migration Explanation</h3>
-          <p class="smalltext">Migrations are Ruby code that translate to SQL code. They’re how we setup, configure, and tune our database. </p>
-
-          <p class="smalltext">Some migrations are generated for you when you, for example, generate a new model. You will also create many of your own independently, to make changes to your database schema (adding or removing columns, changing names of columns, etc). </p>
-
-          <p class="smalltext">Find them in db/migrate/</p>
-
-          <p class="smalltext">Your app will not work as expected if you have pending migrations. They must be ‘run’ to ensure that your database is properly setup. Run them each as they’re created; run them all when resetting your database or installing the app on a new computer. </p>
-          <pre><code class="command-line">$ rails db:migrate</code></pre>
+          <h3>Migrations</h3>
+          <p>We're going to gloss over migrations for now. Migrations are Rails way of changing a database. It makes more sense 
+            as we get into the second half of this class.</p>
         </section>
 
         <section>
@@ -218,6 +226,7 @@ $ rails console
 #Destroy
 > record.destroy 
         </code></pre>
+        <p>Let's run each of these, in order, to see what they do.</p>
         </section>
 
         <section>
@@ -234,9 +243,9 @@ $ rails generate controller Students
         <section>
           <h3>Step 3</h3>
           <h4>Create a Students Controller</h4>
+          <code>app/controllers/students_controller.rb</code>
           <p>In your text editor, open the generated app/controllers/students_controller.rb, and add an ‘index’ method to the class definition. It will go between the <code class="ruby">class</code> and <code>end</code> lines.</p>
-          <pre><code class="ruby">
-def index 
+          <pre><code class="ruby">def index 
   @students = Student.all 
 end           </code></pre>
         </section>
@@ -245,13 +254,13 @@ end           </code></pre>
           <h3>Step 4</h3>
           <h4>Create views for student controller</h4>
           <p>In the app/views/students directory, create a file called index.html.erb. Insert into it:</p>
-          <pre><code class="ruby">
-&lt;h1&gt;Student List&lt;/h1&gt;
+          <pre><code class="ruby">&lt;h1&gt;Student List&lt;/h1&gt;
 <% @students.each do |student| %>
   <%= student.full_name %>
   <%= student.bio %>
 <% end %>
           </code></pre>
+          <p>The | character is called a pipe, and is above the enter/return key.</p>
           <p>Templates (Views) are named the same as the controller's action name. <code class="ruby">def index</code> becomes <code>index.html.erb</code></p>
           <p>ERB explanation on next slide</p>
         </section>
@@ -263,13 +272,9 @@ end           </code></pre>
           <p class="smalltext green">Syntax:</p>
 
           <p class="smalltext">Ruby is processed, but does not display anything:</p>
-          <pre><code class="ruby">
-<% code %>
-          </code></pre>
+          <pre><code class="ruby">&lt;% code %&gt;</code></pre>
           <p class="smalltext">Ruby is processed, and outputs result to the page: </p>
-          <pre><code class="ruby">
-<%= code %> 
-          </code></pre>
+          <pre><code class="ruby">&lt;%= code %&gt;</code></pre>
         </section>
 
         <section>
@@ -279,6 +284,7 @@ end           </code></pre>
           <pre><code class="ruby"> 
 resources :students
           </code></pre>
+          <p>Now we can view <a href="http://localhost:3000/students">http://localhost:3000/students</a> in your browser</p>
         </section>
 
         <section>
@@ -288,6 +294,7 @@ resources :students
           <pre><code class="ruby"> 
 root 'students#index'
           </code></pre>
+          <p>Now you can view <a href="http://localhost:3000/">http://localhost:3000/</a> in your browser.</p>
         </section>
 
         <section>
@@ -328,45 +335,45 @@ root 'students#index'
           <img src="images/railsshibe.jpg" />
           <p><a href="./class2.html">Class 2</a></p>
         </section>
-      </div>
-      <footer>
+      
+			</div>
+  		<footer>
         <div class="copyright">
-          Intro to Rails
+          Intro to Ruby on Rails -- GDI Albuquerque --
           <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/80x15.png" /></a>
         </div>
       </footer>
-    </div>
+		</div>
 
 
+		<script src="dist/js/head.min.js"></script>
+		<script src="dist/js/reveal.min.js"></script>
 
-    <script src="reveal.js/lib/js/head.min.js"></script>
-    <script src="reveal.js/js/reveal.min.js"></script>
+		<script>
 
-    <script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
 
-      // Full list of configuration options available here:
-      // https://github.com/hakimel/reveal.js#configuration
-      Reveal.initialize({
-        controls: true,
-        progress: true,
-        history: true,
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'dist/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/accessibility-helper/js/accessibility-helper.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
 
-        // Optional libraries used to extend on reveal.js
-        dependencies: [
-          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-        ]
-      });
+		</script>
 
-    </script>
-
-
-  </body>
+	</body>
 </html>
